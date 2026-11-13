@@ -1,3 +1,4 @@
+import { withBase } from '../paths'
 import { INFO, SOCIAL, pages } from '../data'
 import { PAGE_META } from '../seo'
 import { Icon } from './Icon'
@@ -16,7 +17,7 @@ export function Footer() {
           <div>
             <h4>Quick links</h4>
             <ul className="footer-links">
-              {pages.map(([k, l]) => <li key={k}><a href={PAGE_META[k].path}>{l}</a></li>)}
+              {pages.map(([k, l]) => <li key={k}><a href={withBase(PAGE_META[k].path)}>{l}</a></li>)}
             </ul>
           </div>
 

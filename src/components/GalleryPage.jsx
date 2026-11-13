@@ -1,3 +1,4 @@
+import { withBase } from '../paths'
 import { gallerySections } from '../data'
 import { PageHero } from './PageHero'
 import { SectionHeading } from './SectionHeading'
@@ -23,7 +24,7 @@ export function GalleryPage() {
           <div className="gal">
             {photos.map(([caption, src]) => (
               <figure key={src}>
-                <img src={src} alt={caption} loading="lazy" />
+                <img src={withBase(src)} alt={caption} loading="lazy" />
                 <figcaption>{caption}</figcaption>
               </figure>
             ))}

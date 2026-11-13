@@ -1,10 +1,11 @@
+import { withBase } from '../paths'
 /* Profile card used for the founder, trustees and Head Mistress */
 export function LeaderCard({ person, tint, greeting }) {
   return (
     <article className="leader">
       <div className="leader-top">
         <div className="leader-photo">
-          <img src={person.img} alt={person.name} />
+          <img src={withBase(person.img)} alt={person.name} />
         </div>
         <div>
           <span className="leader-tag">{person.role}</span>

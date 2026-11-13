@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { PAGE_META } from '../seo'
+import { stripBase, withBase } from '../paths'
 
 const pageFromPath = (path) => {
-  const key = path.replace(/^\/+|\/+$/g, '') || 'home'
+  const key = stripBase(path).replace(/^\/+|\/+$/g, '') || 'home'
   return Object.hasOwn(PAGE_META, key) ? key : 'home'
 }
 
@@ -14,7 +15,7 @@ export function usePage() {
     // Old links such as /#/about keep working
     if (window.location.hash.startsWith('#/')) {
       const key = pageFromPath(window.location.hash.slice(2))
-      window.history.replaceState(null, '', PAGE_META[key].path)
+      window.history.replaceState(null, '', withBase(PAGE_META[key].path))
       setPage(key)
     }
     const onPop = () => setPage(pageFromPath(window.location.pathname))

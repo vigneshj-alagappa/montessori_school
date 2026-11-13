@@ -1,3 +1,4 @@
+import { withBase } from '../paths'
 import { facilities } from '../data'
 import { Icon } from './Icon'
 import { SectionHeading } from './SectionHeading'
@@ -11,7 +12,7 @@ export function FacilitiesSection() {
           {facilities.map(([icon, label, tint]) => <li className={`tint-${tint}`} key={label}><Icon name={icon} size={32} />{label}</li>)}
         </ul>
       </div>
-      <img className="facility-photo" src="/Drive%20Photos/IMG_1885.jpg" alt="Students working with Montessori materials on the classroom floor" loading="lazy" />
+      <img className="facility-photo" src={withBase('/Drive%20Photos/IMG_1885.jpg')} alt="Students working with Montessori materials on the classroom floor" loading="lazy" />
     </section>
   )
 }

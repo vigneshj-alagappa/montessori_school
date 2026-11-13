@@ -1,3 +1,4 @@
+import { withBase } from '../paths'
 import { useState } from 'react'
 import { INFO, pages } from '../data'
 import { PAGE_META } from '../seo'
@@ -18,7 +19,7 @@ export function Navbar({ page }) {
 
         <nav id="site-nav" className={`nav-links ${open ? 'open' : ''}`}>
           {pages.map(([k, l]) => (
-            <a key={k} href={PAGE_META[k].path} className={page === k ? 'act' : ''} onClick={() => setOpen(false)}>
+            <a key={k} href={withBase(PAGE_META[k].path)} className={page === k ? 'act' : ''} onClick={() => setOpen(false)}>
               {l}
             </a>
           ))}

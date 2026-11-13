@@ -1,3 +1,4 @@
+import { withBase } from '../paths'
 import { pillars } from '../data'
 import { HeadMistressSection } from './HeadMistressSection'
 import { Icon } from './Icon'
@@ -16,7 +17,7 @@ export function AboutUsPage() {
       />
 
       <section className="shell section about-intro">
-        <img className="blob-photo" src="/about-montessori-materials.png" alt="Montessori wooden puzzle learning materials" />
+        <img className="blob-photo" src={withBase('/about-montessori-materials.png')} alt="Montessori wooden puzzle learning materials" />
         <div>
           <SectionHeading title="Education that starts with respect" />
           <div className="prose">
@@ -33,7 +34,7 @@ export function AboutUsPage() {
               Our Montessori teachers are certified in using Dr. Montessori&rsquo;s methods and materials to lovingly guide each child in developing unique abilities within a carefully planned curriculum.
             </p>
           </div>
-          <a className="btn" href="/management">Meet our people <Icon name="arrow" size={20} /></a>
+          <a className="btn" href={withBase('/management')}>Meet our people <Icon name="arrow" size={20} /></a>
         </div>
       </section>
 

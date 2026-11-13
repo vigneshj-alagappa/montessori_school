@@ -1,3 +1,4 @@
+import { withBase } from '../paths'
 import { Icon } from './Icon'
 import { SectionHeading } from './SectionHeading'
 
@@ -9,9 +10,9 @@ export function AboutSection() {
         <SectionHeading title="About us" />
         <h3>A strong start since 1953</h3>
         <p>Founded by Dr. Alagappa Chettiar, Alagappa Montessori School was among the first Montessori schools in the region. Children learn through the Play Way method, in a prepared environment that helps each child grow in independence.</p>
-        <a className="btn-outline" href="/about">Know more <Icon name="arrow" size={18} /></a>
+        <a className="btn-outline" href={withBase('/about')}>Know more <Icon name="arrow" size={18} /></a>
       </div>
-      <img className="blob-photo" src="/Children_cropped.png" alt="Students walking together on the school campus" />
+      <img className="blob-photo" src={withBase('/Children_cropped.png')} alt="Students walking together on the school campus" />
       <div className="vision-card">
         <div>
           <h3><Icon name="star" /> Our vision</h3>

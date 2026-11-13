@@ -1,3 +1,4 @@
+import { withBase } from '../paths'
 import { Decor } from './Decor'
 import { Wave } from './Wave'
 
@@ -11,7 +12,7 @@ export function PageHero({ title, tagline, text, photo, photoAlt }) {
           {tagline && <p className="brush">{tagline}</p>}
           {text && <p className="page-hero-text">{text}</p>}
         </div>
-        {photo ? <img className="page-hero-photo" src={photo} alt={photoAlt} /> : <Decor />}
+        {photo ? <img className="page-hero-photo" src={withBase(photo)} alt={photoAlt} /> : <Decor />}
       </div>
       <Wave />
     </section>

@@ -4,6 +4,8 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { OG_IMAGE, PAGE_META } from './src/seo.js'
 
+// Folder the site is served from. '/' for a domain of its own; GitHub Pages project sites use '/<repo>/'.
+const BASE = process.env.BASE_PATH || '/'
 // Production address, e.g. SITE_URL=https://www.example.com npm run build
 // Canonical links, og:url, og:image and sitemap.xml need it, so they are skipped when it is not set.
 const SITE_URL = (process.env.SITE_URL || '').replace(/\/+$/, '')
@@ -40,6 +42,8 @@ function staticPages() {
         mkdirSync(dir, { recursive: true })
         writeFileSync(join(dir, 'index.html'), renderPage(template, meta))
       }
+      // Unknown addresses fall back to the home page (GitHub Pages serves 404.html for them)
+      writeFileSync(join(outDir, '404.html'), renderPage(template, PAGE_META.home))
       const sitemapLine = SITE_URL ? `\nSitemap: ${SITE_URL}/sitemap.xml` : ''
       writeFileSync(join(outDir, 'robots.txt'), `User-agent: *\nAllow: /${sitemapLine}\n`)
       if (SITE_URL) {
@@ -50,4 +54,4 @@ function staticPages() {
   }
 }
 
-export default defineConfig({ plugins: [react(), staticPages()] })
+export default defineConfig({ base: BASE, plugins: [react(), staticPages()] })
