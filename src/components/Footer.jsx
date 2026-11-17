@@ -1,5 +1,5 @@
 import { withBase } from '../paths'
-import { INFO, SOCIAL, pages } from '../data'
+import { INFO, MAP_LINK, SOCIAL, pages } from '../data'
 import { PAGE_META } from '../seo'
 import { Icon } from './Icon'
 import { Logo } from './Logo'
@@ -24,15 +24,16 @@ export function Footer() {
           <div>
             <h4>Visit us</h4>
             <address className="footer-contact">
-              <p><Icon name="pin" size={18} /> {INFO.address}</p>
-              <p><Icon name="phone" size={18} /> <a href={INFO.phoneHref}>{INFO.phone}</a></p>
-              <p><Icon name="mail" size={18} /> <a href={`mailto:${INFO.email}`}>{INFO.email}</a></p>
+              <p><a className="contact-link" href={MAP_LINK} target="_blank" rel="noopener noreferrer"><Icon name="pin" size={18} /> <span>{INFO.address}</span></a></p>
+              <p><a className="contact-link" href={INFO.phoneHref}><Icon name="phone" size={18} /> <span>{INFO.phone}</span></a></p>
+              <p><a className="contact-link" href={`mailto:${INFO.email}`}><Icon name="mail" size={18} /> <span>{INFO.email}</span></a></p>
             </address>
           </div>
 
           <div>
             <h4>Follow us</h4>
             <div className="social-links">
+              {SOCIAL.facebook && <a href={SOCIAL.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="social-icon"><Icon name="facebook" size={20} /></a>}
               <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="social-icon"><Icon name="instagram" size={20} /></a>
               <a href={SOCIAL.youtube} target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="social-icon"><Icon name="youtube" size={20} /></a>
             </div>

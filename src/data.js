@@ -6,12 +6,17 @@ export const INFO = {
   phoneShort: '044 4997 1111',
   phoneHref: 'tel:+914449971111,0902',
   email: 'montessori@alagappa.org',
+  whatsapp: '86678 74754',
+  whatsappHref: 'https://wa.me/918667874754',
   hours: '9:00 AM to 3:30 PM'
 }
+// Opens the school in Google Maps (app on phones)
+export const MAP_LINK = 'https://www.google.com/maps/search/?api=1&query=Alagappa+Montessori+School,+Alagappapuram,+Karaikudi+630003'
 export const MAP = 'https://www.google.com/maps?q=Alagappa+Montessori+School,+Alagappapuram,+Karaikudi+630003&output=embed'
 export const SOCIAL = {
   instagram: 'https://www.instagram.com/alagappa_montessori_school2025?exln=MXM5ZjV4bm01MXJ6cQ==',
-  youtube: 'https://www.youtube.com/@thealagappagroup1288'
+  youtube: 'https://www.youtube.com/@thealagappagroup1288',
+  facebook: 'https://www.facebook.com/people/Alagappa-Montessori-School/pfbid02ncHTorUKvePDei7GsDsWocHscv6gEyJknCTUoqhSLhVGwF5xtiBvXDjVaFCwaXCDl/'
 }
 /* ================================================ */
 
@@ -133,11 +138,10 @@ export const gallerySections = [
     title: 'Campus',
     sub: 'Our school buildings and grounds',
     photos: [
-      ['Campus Building & Entrance', '/Drive%20Photos/Front_images_montessori.png'],
-      ['School Campus Architecture & Signage', '/Drive%20Photos/IMG_1987.jpg'],
-      ['Front Entrance & Play Grounds', '/Drive%20Photos/IMG_1988.jpg'],
-      ['Alagappa Montessori School building', '/calendar-2026/campus-01.jpg'],
-      ['Alagappa Hostel, Karaikudi', '/calendar-2026/campus-02.jpg']
+      ['Alagappa Montessori School building', '/calendar-2026/AM_School_front_elevation.png'],
+      ['Alagappa Hostel, Karaikudi', '/calendar-2026/Hostel.png'],
+      ['Computer lab', '/Drive%20Photos/IMG_1937.jpg'],
+      ['Smart classroom', '/Drive%20Photos/IMG_1947.jpg']
     ]
   },
   {
@@ -185,9 +189,7 @@ export const gallerySections = [
       ['Certificates in singing, dance and keyboard', '/calendar-2026/achievements-01.jpg'],
       ['First prize in a drawing competition', '/calendar-2026/achievements-02.jpg'],
       ['Bharatanatyam competition at Senjai Mariamman Temple', '/calendar-2026/achievements-03.jpg'],
-      ['Edison Academy competition winners', '/calendar-2026/achievements-04.jpg'],
       ['Edison Academy competition medal', '/calendar-2026/achievements-05.jpg'],
-      ['Edison Academy competition winner', '/calendar-2026/achievements-06.jpg'],
       ['Bharatanatyam, Divine World Book of Records 2025', '/calendar-2026/achievements-07.jpg'],
       ['Lincoln Book of Records, multiple activities', '/calendar-2026/achievements-08.jpg'],
       ['Competition prize winner', '/calendar-2026/achievements-09.jpg'],

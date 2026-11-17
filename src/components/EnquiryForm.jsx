@@ -2,11 +2,22 @@ import { useState } from 'react'
 import { classes, INFO } from '../data'
 import { Icon } from './Icon'
 
-/* Opens the parent's email app with the enquiry addressed to the school */
-export function EnquiryForm() {
-  const [sent, setSent] = useState(false)
+const q = encodeURIComponent
 
-  const openEmail = (e) => {
+/* Ways to send the enquiry. A mailto: link alone does nothing on computers without
+   an email app set up, so Gmail and Outlook open in the browser as well. */
+const sendLinks = ({ subject, body }) => [
+  ['Gmail', `https://mail.google.com/mail/?view=cm&fs=1&to=${q(INFO.email)}&su=${q(subject)}&body=${q(body)}`],
+  ['Outlook', `https://outlook.live.com/mail/0/deeplink/compose?to=${q(INFO.email)}&subject=${q(subject)}&body=${q(body)}`],
+  ['Email app', `mailto:${INFO.email}?subject=${q(subject)}&body=${q(body)}`]
+]
+
+/* Prepares the parent's enquiry as an email addressed to the school */
+export function EnquiryForm() {
+  const [message, setMessage] = useState(null)
+  const [copied, setCopied] = useState(false)
+
+  const prepare = (e) => {
     e.preventDefault()
     const form = new FormData(e.target)
     const name = form.get('name')
@@ -17,24 +28,42 @@ export function EnquiryForm() {
       '',
       form.get('message')
     ].join('\n')
-    const subject = `School enquiry from ${name}`
-    window.location.href = `mailto:${INFO.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-    setSent(true)
+    setCopied(false)
+    setMessage({ subject: `School enquiry from ${name}`, body })
   }
 
-  if (sent) {
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(`To: ${INFO.email}\nSubject: ${message.subject}\n\n${message.body}`)
+      setCopied(true)
+    } catch {
+      setCopied(false)
+    }
+  }
+
+  if (message) {
     return (
       <div className="info tint-butter" role="status">
-        <h3>One more step</h3>
-        <p>Your email app should have opened with your message ready. Please press Send there so it reaches us.</p>
-        <p>If it did not open, call <a href={INFO.phoneHref}>{INFO.phone}</a> or write to <a href={`mailto:${INFO.email}`}>{INFO.email}</a>.</p>
-        <button type="button" className="btn" onClick={() => setSent(false)}>Back to the form</button>
+        <h3>Send your enquiry</h3>
+        <p>Your message is ready. Choose how to send it, then press Send in the email that opens.</p>
+        <div className="send-options">
+          {sendLinks(message).map(([label, href]) => (
+            <a key={label} className="btn-outline" href={href} {...(href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
+              <Icon name="mail" size={18} /> {label}
+            </a>
+          ))}
+          <button type="button" className="btn-outline" onClick={copy}>
+            <Icon name="copy" size={18} /> {copied ? 'Copied' : 'Copy message'}
+          </button>
+        </div>
+        <p>Or call <a href={INFO.phoneHref}>{INFO.phone}</a>, or write to <a href={`mailto:${INFO.email}`}>{INFO.email}</a>.</p>
+        <button type="button" className="btn" onClick={() => setMessage(null)}>Back to the form</button>
       </div>
     )
   }
 
   return (
-    <form className="form" onSubmit={openEmail}>
+    <form className="form" onSubmit={prepare}>
       <label>Parent name
         <input required name="name" autoComplete="name" />
       </label>
