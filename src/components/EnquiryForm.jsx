@@ -12,6 +12,9 @@ const sendLinks = ({ subject, body }) => [
   ['Email app', `mailto:${INFO.email}?subject=${q(subject)}&body=${q(body)}`]
 ]
 
+// Name fields: form field name, label, and whether it must be filled in
+const NAME_FIELDS = [['father', "Father's name", true], ['mother', "Mother's name", true], ['guardian', "Guardian's name", false]]
+
 /* Prepares the parent's enquiry as an email addressed to the school */
 export function EnquiryForm() {
   const [message, setMessage] = useState(null)
@@ -20,9 +23,10 @@ export function EnquiryForm() {
   const prepare = (e) => {
     e.preventDefault()
     const form = new FormData(e.target)
-    const name = form.get('name')
+    const names = NAME_FIELDS.map(([key, label]) => [label, form.get(key).trim()]).filter(([, value]) => value)
+    const name = form.get('father').trim()
     const body = [
-      `Parent name: ${name}`,
+      ...names.map(([label, value]) => `${label}: ${value}`),
       `Phone number: ${form.get('phone')}`,
       `Class of interest: ${form.get('class') || 'Not specified'}`,
       '',
@@ -32,9 +36,21 @@ export function EnquiryForm() {
     setMessage({ subject: `School enquiry from ${name}`, body })
   }
 
+  const fullText = () => `To: ${INFO.email}\nSubject: ${message.subject}\n\n${message.body}`
+
+  // Opens the device's own list of installed apps (Gmail, Outlook, Mail, ...)
+  const canShare = typeof navigator.share === 'function'
+  const share = async () => {
+    try {
+      await navigator.share({ title: message.subject, text: fullText() })
+    } catch {
+      // Closed without choosing an app
+    }
+  }
+
   const copy = async () => {
     try {
-      await navigator.clipboard.writeText(`To: ${INFO.email}\nSubject: ${message.subject}\n\n${message.body}`)
+      await navigator.clipboard.writeText(fullText())
       setCopied(true)
     } catch {
       setCopied(false)
@@ -52,10 +68,16 @@ export function EnquiryForm() {
               <Icon name="mail" size={18} /> {label}
             </a>
           ))}
+          {canShare && (
+            <button type="button" className="btn-outline" onClick={share}>
+              <Icon name="share" size={18} /> Choose an app
+            </button>
+          )}
           <button type="button" className="btn-outline" onClick={copy}>
             <Icon name="copy" size={18} /> {copied ? 'Copied' : 'Copy message'}
           </button>
         </div>
+        {canShare && <p className="send-hint">“Choose an app” shows the apps on your device. If the school’s address is not filled in there, send it to {INFO.email}.</p>}
         <p>Or call <a href={INFO.phoneHref}>{INFO.phone}</a>, or write to <a href={`mailto:${INFO.email}`}>{INFO.email}</a>.</p>
         <button type="button" className="btn" onClick={() => setMessage(null)}>Back to the form</button>
       </div>
@@ -64,9 +86,11 @@ export function EnquiryForm() {
 
   return (
     <form className="form" onSubmit={prepare}>
-      <label>Parent name
-        <input required name="name" autoComplete="name" />
-      </label>
+      {NAME_FIELDS.map(([key, label, required]) => (
+        <label key={key}>{required ? label : <span>{label} <small className="optional">(optional)</small></span>}
+          <input name={key} required={required} pattern=".*\S.*" title="Please enter a name" autoComplete="off" />
+        </label>
+      ))}
       <label>Phone number
         <input required type="tel" name="phone" autoComplete="tel" />
       </label>
